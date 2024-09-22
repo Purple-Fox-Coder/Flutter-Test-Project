@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavouritesPage();
         break;
       default:
         throw UnimplementedError("No widget for $selectedIndex");
@@ -105,11 +105,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class FavouritesPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    MyAppState appState = context.watch<MyAppState>();
+    final ScrollController scrollController = ScrollController();
+
+    return Center(
+      child: Scrollbar(
+        thumbVisibility: true,
+        controller: scrollController,
+        
+        child: ListView(
+          controller: scrollController,
+          children: appState.favourites.map((pair) => BigCard(pair: pair)).toList(),
+        ),
+      ),
+    );
+  }
+}
+
 class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    MyAppState appState = context.watch<MyAppState>();
+    WordPair pair = appState.current;
 
     IconData icon;
     if (appState.favourites.contains(pair)) {
@@ -169,13 +190,17 @@ class BigCard extends StatelessWidget {
       
       child: Padding(
         padding: const EdgeInsets.all(15),
-        child: Text(
-          pair.asLowerCase, 
-          style: style, 
-          semanticsLabel: pair.asPascalCase, // sets up for screen readers
+        child: Align(
+          alignment: Alignment.center,
+          widthFactor: 1,
+
+          child: Text(
+            pair.asLowerCase, 
+            style: style, 
+            semanticsLabel: pair.asPascalCase, // sets up for screen readers
+          ),
         ),
       ),
     );
   }
 }
-
