@@ -117,7 +117,13 @@ class FavouritesPage extends StatelessWidget {
         thumbVisibility: true,
         controller: scrollController,
         
-        child: ListView(
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 300,
+            childAspectRatio: 1,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+          ),
           controller: scrollController,
           children: appState.favourites.map((pair) => BigCard(pair: pair)).toList(),
         ),
