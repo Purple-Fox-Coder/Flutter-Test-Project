@@ -46,7 +46,6 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           
           children: [
-            Text('A random idea:'),
             BigCard(pair: pair),
             ElevatedButton( // widget
               onPressed: () {
